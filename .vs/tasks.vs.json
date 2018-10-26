@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskName": "task-ENSF-645-Project",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}
