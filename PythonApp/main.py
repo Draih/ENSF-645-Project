@@ -21,20 +21,20 @@ input_data = Input(input_size)
 
 ##### conv net 
 # parameters adjusted like shown in table, used the small feature --> N/A means no implemenation of MaxPooling layer, Christoph 11 Dec 2018
-c1 = Convolution1D(256,7)(input_data)                
+c1 = Convolution1D(256,7,activation='relu')(input_data)                
 p1 = MaxPooling1D(3)(c1)
-c2 = Convolution1D(256,7)(p1)                
+c2 = Convolution1D(256,7,activation='relu')(p1)                
 p2 = MaxPooling1D(3)(c2)
-c3 = Convolution1D(256,3)(p2)                
-c4 = Convolution1D(256,3)(c3)                
-c5 = Convolution1D(256,3)(c4)                
-c6 = Convolution1D(256,3)(c5)                
+c3 = Convolution1D(256,3,activation='relu')(p2)                
+c4 = Convolution1D(256,3,activation='relu')(c3)                
+c5 = Convolution1D(256,3,activation='relu')(c4)                
+c6 = Convolution1D(256,3,activation='relu')(c5)                
 p6 = MaxPooling1D(3)(c6)
 
 ##### fully connected layers with dropout
-fc1 = Dense(1024)(p6)
+fc1 = Dense(1024,activation='relu')(p6)
 d1 = Dropout(0.5)(fc1)
-fc2 = Dense(1024)(d1)
+fc2 = Dense(1024,activation='relu')(d1)
 d2 = Dropout(0.5)(fc2)
 
 ##### Output
