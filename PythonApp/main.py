@@ -17,22 +17,22 @@ x_train, y_train, x_test, y_test = YelpSpecificJSON("yelp_academic_dataset_revie
 learning_rate = 1e-4
 epochs=5000
 batch_size = 128
-classes=4 # ?
+classes=5 # ?
 input_size=1014
 
 ##### Input
-input_data = Input(input_size)
+input_data = Input((input_size, 1))
 
 ##### conv net 
-# parameters adjusted like shown in table, used the small feature --> N/A means no implemenation of MaxPooling layer, Christoph 11 Dec 2018
-c1 = Convolution1D(256,7,activation='relu')(input_data)                
+# parameters adjusted like shown in table, used the small feature --> N/A means no implementation of MaxPooling layer, Christoph 11 Dec 2018
+c1 = Convolution1D(256,7,activation='relu')(input_data)
 p1 = MaxPooling1D(3)(c1)
-c2 = Convolution1D(256,7,activation='relu')(p1)                
+c2 = Convolution1D(256,7,activation='relu')(p1)
 p2 = MaxPooling1D(3)(c2)
-c3 = Convolution1D(256,3,activation='relu')(p2)                
-c4 = Convolution1D(256,3,activation='relu')(c3)                
-c5 = Convolution1D(256,3,activation='relu')(c4)                
-c6 = Convolution1D(256,3,activation='relu')(c5)                
+c3 = Convolution1D(256,3,activation='relu')(p2)
+c4 = Convolution1D(256,3,activation='relu')(c3)
+c5 = Convolution1D(256,3,activation='relu')(c4)
+c6 = Convolution1D(256,3,activation='relu')(c5)
 p6 = MaxPooling1D(3)(c6)
 
 ##### fully connected layers with dropout
