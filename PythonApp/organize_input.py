@@ -23,10 +23,22 @@ def YelpSpecificJSON(filename, train_lines=15, test_lines=5):
     test_stars = []
     for i, line in zip(range(train_lines + test_lines), open(filename, 'r')):
         entry = json.loads(line)
+        entry["text"] = entry["text"].lower()
         if (i < train_lines):
-            train_texts.append(entry["text"].lower())
+            train_texts.append(LineToNums(entry["text"]))
             train_stars.append(entry["stars"])
         else:
-            test_texts.append(entry["text"].lower())
+            test_texts.append(LineToNums(entry["text"]))
             test_stars.append(entry["stars"])
     return (train_texts, train_stars, test_texts, test_stars)
+
+valid_char_string = "abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:'\"/\\|_@#$%ˆ&*˜‘+-=<>()[]{}"
+
+def LineToNums(line):
+    output = []
+    for c in line:
+        if c in valid_char_string:
+            output.append(ord(c))
+        else:
+            output.append(0)
+    return output

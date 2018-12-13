@@ -8,10 +8,13 @@ from keras.layers import Input
 import numpy as np
 from organize_input import YelpSpecificJSON
 
+train_size = 25
+test_size = 5
+
 # init of weights I am not sure if this is right
 keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
 # Load our dataset here. Need to find out if we need to cut down to subsets of the dataset or which datasets we should / shouldn't do.
-x_train, y_train, x_test, y_test = YelpSpecificJSON("yelp_academic_dataset_review.json", 15, 5)
+x_train, y_train, x_test, y_test = YelpSpecificJSON("yelp_academic_dataset_review.json", train_size, test_size)
 
 # Training parameters
 learning_rate = 1e-4
@@ -21,7 +24,7 @@ classes=5 # ?
 input_size=1014
 
 ##### Input
-input_data = Input((input_size, 1))
+input_data = Input((70, input_size))
 
 ##### conv net 
 # parameters adjusted like shown in table, used the small feature --> N/A means no implementation of MaxPooling layer, Christoph 11 Dec 2018
