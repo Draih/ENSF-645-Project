@@ -8,7 +8,7 @@ from keras.layers import Input
 import numpy as np
 from organize_input import YelpSpecificJSON
 
-train_size = 25
+train_size = 75
 test_size = 5
 
 # init of weights I am not sure if this is right
@@ -18,13 +18,13 @@ x_train, y_train, x_test, y_test = YelpSpecificJSON("yelp_academic_dataset_revie
 
 # Training parameters
 learning_rate = 1e-4
-epochs=5000
+epochs = 5000
 batch_size = 128
-classes=5 # ?
-input_size=1014
+classes = 5 # ?
+input_size = 1014
 
 ##### Input
-input_data = Input((70, input_size))
+input_data = Input(shape=(input_size, train_size ))
 
 ##### conv net 
 # parameters adjusted like shown in table, used the small feature --> N/A means no implementation of MaxPooling layer, Christoph 11 Dec 2018

@@ -38,7 +38,8 @@ def LineToNums(line):
     output = []
     for c in line:
         if c in valid_char_string:
-            output.append(ord(c))
+            output.append(valid_char_string.index(c) + 1)
         else:
             output.append(0)
+    while (len(output) < 1014): output.append(0)
     return output
