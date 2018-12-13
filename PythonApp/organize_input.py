@@ -6,20 +6,27 @@
 #     be treated as return[1].
 #
 #   Example:
-#     x, y = YelpSpecificJSON("yelp_academic_dataset_review.json", 15)
-#     x contains the value of input text reviews
-#     y contains the star ratings matching those reviews
-#     The second argument is the number of reviews that will be read. This
+#     x_train, y_train, x_test, y_test = YelpSpecificJSON("yelp_academic_dataset_review.json", 15, 5)
+#     x_train and x_test contain the values of input text reviews.
+#     y_train and y_test contain the star ratings matching those reviews.
+#     The second and third arguments are the numbers of reviews that will be read. This
 #       is made available since the original dataset is massive.
 #
 ###
 
 import json
 
-def YelpSpecificJSON(filename, num_lines=15):
-    texts = []
-    stars = []
-    for i, line in zip(range(num_lines), open(filename, 'r')):
-        texts.append(json.loads(line)["text"])
-        stars.append(json.loads(line)["stars"])
-    return (texts, stars)
+def YelpSpecificJSON(filename, train_lines=15, test_lines=5):
+    train_texts = []
+    train_stars = []
+    test_texts = []
+    test_stars = []
+    for i, line in zip(range(train_lines + test_lines), open(filename, 'r')):
+        entry = json.loads(line)
+        if (i < train_lines):
+            train_texts.append(entry["text"])
+            train_stars.append(entry["stars"])
+        else:
+            test_texts.append(entry["text"])
+            test_stars.append(entry["stars"])
+    return (train_texts, train_stars, test_texts, test_stars)

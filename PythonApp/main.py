@@ -6,10 +6,12 @@ from keras.layers import Convolution1D, MaxPooling1D
 from keras import backend as K
 from keras.layers import Input
 import numpy as np
+from organize_input import YelpSpecificJSON
 
 # init of weights I am not sure if this is right
 keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
 # Load our dataset here. Need to find out if we need to cut down to subsets of the dataset or which datasets we should / shouldn't do.
+x_train, y_train, x_test, y_test = YelpSpecificJSON("yelp_academic_dataset_review.json", 15, 5)
 
 # Training parameters
 learning_rate = 1e-4
@@ -48,6 +50,12 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta())
 
 # Training
+model.fit(x_train,
+          y_train,
+          batch_size=batch_size,
+          epochs=epochs,
+          verbose=1,
+          validation_data=(x_test, y_test))
 
 # Testing
 
