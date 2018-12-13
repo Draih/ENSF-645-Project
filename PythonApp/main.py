@@ -7,6 +7,8 @@ from keras import backend as K
 from keras.layers import Input
 import numpy as np
 
+# init of weights I am not sure if this is right
+keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
 # Load our dataset here. Need to find out if we need to cut down to subsets of the dataset or which datasets we should / shouldn't do.
 
 # Training parameters
