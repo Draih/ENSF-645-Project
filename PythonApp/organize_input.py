@@ -15,21 +15,22 @@
 ###
 
 import json
+import numpy as np
 
 def YelpSpecificJSON(filename, train_lines=15, test_lines=5):
-    train_texts = []
-    train_stars = []
-    test_texts = []
-    test_stars = []
+    train_texts = np.array([])
+    train_stars = np.array([])
+    test_texts = np.array([])
+    test_stars = np.array([])
     for i, line in zip(range(train_lines + test_lines), open(filename, 'r')):
         entry = json.loads(line)
         entry["text"] = entry["text"].lower()
         if (i < train_lines):
-            train_texts.append(LineToNums(entry["text"]))
-            train_stars.append(entry["stars"])
+            np.append(train_texts, LineToNums(entry["text"]))
+            np.append(train_stars, entry["stars"])
         else:
-            test_texts.append(LineToNums(entry["text"]))
-            test_stars.append(entry["stars"])
+            np.append(test_texts, LineToNums(entry["text"]))
+            np.append(test_stars, entry["stars"])
     return (train_texts, train_stars, test_texts, test_stars)
 
 valid_char_string = "abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:'\"/\\|_@#$%ˆ&*˜‘+-=<>()[]{}"

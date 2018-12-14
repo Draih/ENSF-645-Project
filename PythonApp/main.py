@@ -8,7 +8,7 @@ from keras.layers import Input
 import numpy as np
 from organize_input import YelpSpecificJSON
 
-train_size = 75
+train_size = 25
 test_size = 5
 
 # init of weights I am not sure if this is right
@@ -23,8 +23,11 @@ batch_size = 128
 classes = 5 # ?
 input_size = 1014
 
+x_train = x_train.reshape(x_train.shape[0], input_size, 1)
+x_test = x_test.reshape(x_test.shape[0], input_size, 1)
+
 ##### Input
-input_data = Input(shape=(input_size, train_size ))
+input_data = Input(shape=(input_size, 1 ))
 
 ##### conv net 
 # parameters adjusted like shown in table, used the small feature --> N/A means no implementation of MaxPooling layer, Christoph 11 Dec 2018
@@ -38,8 +41,10 @@ c5 = Convolution1D(256,3,activation='relu')(c4)
 c6 = Convolution1D(256,3,activation='relu')(c5)
 p6 = MaxPooling1D(3)(c6)
 
+fl1 = Flatten()(p6)
+
 ##### fully connected layers with dropout
-fc1 = Dense(1024,activation='relu')(p6)
+fc1 = Dense(1024,activation='relu')(fl1)
 d1 = Dropout(0.5)(fc1)
 fc2 = Dense(1024,activation='relu')(d1)
 d2 = Dropout(0.5)(fc2)
