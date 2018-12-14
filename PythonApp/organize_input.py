@@ -18,29 +18,30 @@ import json
 import numpy as np
 
 def YelpSpecificJSON(filename, train_lines=15, test_lines=5):
-    train_texts = np.array([])
-    train_stars = np.array([])
-    test_texts = np.array([])
-    test_stars = np.array([])
+    train_texts = []
+    train_stars = []
+    test_texts = []
+    test_stars = []
     for i, line in zip(range(train_lines + test_lines), open(filename, 'r')):
         entry = json.loads(line)
         entry["text"] = entry["text"].lower()
         if (i < train_lines):
-            np.append(train_texts, LineToNums(entry["text"]))
-            np.append(train_stars, entry["stars"])
+            train_texts.append(LineToNums(entry["text"]))
+            train_stars.append(entry["stars"])
         else:
-            np.append(test_texts, LineToNums(entry["text"]))
-            np.append(test_stars, entry["stars"])
-    return (train_texts, train_stars, test_texts, test_stars)
+            test_texts.append(LineToNums(entry["text"]))
+            test_stars.append(entry["stars"])
+    return (np.array(train_texts), np.array(train_stars), np.array(test_texts), np.array(test_stars))
 
 valid_char_string = "abcdefghijklmnopqrstuvwxyz0123456789-,;.!?:'\"/\\|_@#$%ˆ&*˜‘+-=<>()[]{}"
 
 def LineToNums(line):
     output = []
-    for c in line:
+    for c, i in zip(line, range(1014)):
         if c in valid_char_string:
             output.append(valid_char_string.index(c) + 1)
         else:
             output.append(0)
     while (len(output) < 1014): output.append(0)
-    return output
+    result = np.array(output)
+    return result

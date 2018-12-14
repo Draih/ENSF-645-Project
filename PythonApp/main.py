@@ -8,19 +8,25 @@ from keras.layers import Input
 import numpy as np
 from organize_input import YelpSpecificJSON
 
-train_size = 25
-test_size = 5
+train_size = 8000
+test_size = 100
 
 # init of weights I am not sure if this is right
 keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
 # Load our dataset here. Need to find out if we need to cut down to subsets of the dataset or which datasets we should / shouldn't do.
 x_train, y_train, x_test, y_test = YelpSpecificJSON("yelp_academic_dataset_review.json", train_size, test_size)
 
+print (x_train[0])
+
+print('x_train shape: ', x_train.shape)
+print(x_train.shape[0], 'train samples')
+print(x_test.shape[0], 'test samples')
+
 # Training parameters
-learning_rate = 1e-4
-epochs = 5000
+learning_rate = 1e-3
+epochs = 10
 batch_size = 128
-classes = 5 # ?
+classes = 1 # ?
 input_size = 1014
 
 x_train = x_train.reshape(x_train.shape[0], input_size, 1)
@@ -54,8 +60,8 @@ y = Dense(classes, activation='softmax')(d2)
 
 model = keras.models.Model(inputs=[input_data], outputs=[y])
 
-model.compile(loss=keras.losses.categorical_crossentropy,
-              optimizer=keras.optimizers.Adadelta())
+model.compile(loss=keras.losses.mean_squared_error,
+              optimizer='sgd')
 
 # Training
 model.fit(x_train,
