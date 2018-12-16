@@ -22,7 +22,7 @@ def YelpSpecificJSON(filename, train_lines=15, test_lines=5):
     train_stars = []
     test_texts = []
     test_stars = []
-    for i, line in zip(range(train_lines + test_lines), open(filename, 'r')):
+    for i, line in zip(range(train_lines + test_lines), open(filename, 'r', encoding="utf8")):
         entry = json.loads(line)
         entry["text"] = entry["text"].lower()
         if (i < train_lines):

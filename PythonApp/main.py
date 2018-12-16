@@ -8,8 +8,8 @@ from keras.layers import Input
 import numpy as np
 from organize_input import YelpSpecificJSON
 
-train_size = 8000
-test_size = 100
+train_size = 200000
+test_size = 40000
 
 # init of weights I am not sure if this is right
 keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
@@ -24,7 +24,7 @@ print(x_test.shape[0], 'test samples')
 
 # Training parameters
 learning_rate = 1e-3
-epochs = 10
+epochs = 1
 batch_size = 128
 classes = 1 # ?
 input_size = 1014
@@ -70,6 +70,8 @@ model.fit(x_train,
           epochs=epochs,
           verbose=1,
           validation_data=(x_test, y_test))
+
+model.save('ProjectModel.h5')
 
 # Testing
 
